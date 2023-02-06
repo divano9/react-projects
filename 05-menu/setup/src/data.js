@@ -71,5 +71,13 @@ const menu = [
     img: "./images/item-9.jpeg",
     desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
   },
+  {
+    id: 10,
+    title: "cicini kinezi",
+    category: "cica",
+    price: 16.99,
+    img: "https://redhousespice.com/wp-content/uploads/2021/10/chicken-chow-mein-in-a-wok-scaled.jpg",
+    desc: `najbolji kinezi u srbiji i sire`,
+  },
 ];
 export default menu;
