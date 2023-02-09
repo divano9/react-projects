@@ -26,11 +26,7 @@ function App() {
 
   return (
     <section className="section">
-      <div className="title">
-        <h2>
-          <span>/</span>reviews
-        </h2>
-      </div>
+      <Title />
       <div className="section-center">
         {people.map((person, personIndex) => {
           const { id, image, name, title, quote } = person;
@@ -48,13 +44,14 @@ function App() {
           }
 
           return (
-            <article className={position} key={id}>
-              <img src={image} alt={name} className="person-img"></img>
-              <h4>{name}</h4>
-              <p className="title">{title}</p>
-              <p className="text">{quote}</p>
-              <FaQuoteRight className="icon" />
-            </article>
+            <Person
+              id={id}
+              image={image}
+              name={name}
+              title={title}
+              quote={quote}
+              position={position}
+            />
           );
         })}
         <button className="prev" onClick={() => setIndex(index - 1)}>
@@ -67,5 +64,27 @@ function App() {
     </section>
   );
 }
+
+const Title = () => {
+  return (
+    <div className="title">
+      <h2>
+        <span>/</span>reviews
+      </h2>
+    </div>
+  );
+};
+
+const Person = ({ id, image, name, title, quote, position }) => {
+  return (
+    <article className={position} key={id}>
+      <img src={image} alt={name} className="person-img"></img>
+      <h4>{name}</h4>
+      <p className="title">{title}</p>
+      <p className="text">{quote}</p>
+      <FaQuoteRight className="icon" />
+    </article>
+  );
+};
 
 export default App;

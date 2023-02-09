@@ -1,25 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useReducer } from "react";
 import { FaAngleDoubleRight } from "react-icons/fa";
+import { reducer, defaultState } from "./reducer";
 // ATTENTION!!!!!!!!!!
 // I SWITCHED TO PERMANENT DOMAIN
 const url = "https://course-api.com/react-tabs-project";
+
 function App() {
-  const [loading, setLoading] = useState(true);
+  const [state, dispatch] = useReducer(reducer, defaultState);
+
+  /* const [loading, setLoading] = useState(true);
   const [jobs, setJobs] = useState([]);
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(0); */
 
   const fetchJobs = async () => {
     const response = await fetch(url);
     const newJobs = await response.json();
-    setJobs(newJobs);
-    setLoading(false);
+
+    dispatch({ type: "GET_JOBS", payload: newJobs });
+    // setJobs(newJobs);
+    dispatch({ type: "TURN_OFF_LOADING" });
+    // setLoading(false);
   };
 
   useEffect(() => {
     fetchJobs();
   }, []);
 
-  if (loading) {
+  if (state.loading) {
     return (
       <section className="section loading">
         <h1>Loading...</h1>
@@ -27,7 +34,7 @@ function App() {
     );
   }
 
-  const { company, dates, duties, title } = jobs[value];
+  const { company, dates, duties, title } = state.jobs[state.value];
 
   return (
     <section className="section">
@@ -38,12 +45,15 @@ function App() {
       <div className="jobs-center">
         {/* btn container */}
         <div className="btn-container">
-          {jobs.map((item, index) => {
+          {state.jobs.map((item, index) => {
             return (
               <button
                 key={item.id}
-                onClick={() => setValue(index)}
-                className={`job-btn ${index === value && "active-btn"}`}
+                onClick={() => {
+                  dispatch({ type: "SET_VALUE", payload: index });
+                  //  setValue(index)
+                }}
+                className={`job-btn ${index === state.value && "active-btn"}`}
               >
                 {item.company}
               </button>
